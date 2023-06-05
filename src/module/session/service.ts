@@ -18,7 +18,7 @@ export default class SessionService {
         accountId,
       },
     });
-    return session.id;
+    return session;
   }
   async createFromToken(token: string) {
     console.log(

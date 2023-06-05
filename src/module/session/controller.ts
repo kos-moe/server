@@ -7,6 +7,6 @@ export default class SessionController {
   constructor(private session: SessionService) {}
   @Post()
   async create(@Body() { token }: CreateSessionDto) {
-    return this.session.createFromToken(token);
+    return (await this.session.createFromToken(token)).id;
   }
 }
