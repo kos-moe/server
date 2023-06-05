@@ -1,24 +1,22 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import DatabaseService from '../database/service';
 import { ulid } from 'ulid';
 import AccountService from '../account/service';
 import { ConfigService } from '@nestjs/config';
+import RedisService from '../database/redis.service';
 
 @Injectable()
 export default class SessionService {
   constructor(
-    private db: DatabaseService,
     private account: AccountService,
     private config: ConfigService,
+    private Redis: RedisService,
   ) {}
   async create(accountId: string) {
-    const session = await this.db.session.create({
-      data: {
-        id: ulid(),
-        accountId,
-      },
-    });
-    return session;
+    const sessionId = ulid();
+    const redis = await this.Redis.db(0);
+    await redis.set(sessionId, JSON.stringify({ accountId }));
+    await redis.expire(sessionId, 60 * 60 * 24 * 7);
+    return sessionId;
   }
   async createFromToken(token: string) {
     console.log(
@@ -56,5 +54,9 @@ export default class SessionService {
         return this.account.upsert(data.id, data.name);
       });
     return await this.create(account.id);
+  }
+  async get(id: string) {
+    const redis = await this.Redis.db(0);
+    return JSON.parse(await redis.get(id));
   }
 }

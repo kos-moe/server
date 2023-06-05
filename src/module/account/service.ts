@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import DatabaseService from '../database/service';
+import DatabaseService from '../database/db.service';
 
 @Injectable()
 export default class AccountService {
