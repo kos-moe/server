@@ -3,6 +3,8 @@ import { ulid } from 'ulid';
 import AccountService from '../account/service';
 import { ConfigService } from '@nestjs/config';
 import RedisService from '../database/redis.service';
+import DatabaseService from '../database/db.service';
+import { Session } from '@prisma/client';
 
 @Injectable()
 export default class SessionService {
@@ -10,13 +12,26 @@ export default class SessionService {
     private account: AccountService,
     private config: ConfigService,
     private Redis: RedisService,
+    private db: DatabaseService,
   ) {}
-  async create(accountId: string) {
-    const sessionId = ulid();
+  private async setCache(session: Session) {
     const redis = await this.Redis.db(0);
-    await redis.set(sessionId, JSON.stringify({ accountId }));
-    await redis.expire(sessionId, 60 * 60 * 24 * 7);
-    return sessionId;
+    const { id, ...data } = session;
+    await redis.set(id, JSON.stringify(data));
+    await redis.expire(id, 3600);
+  }
+  async create(accountId: string) {
+    const id = ulid();
+    const session = await this.db.session.create({
+      data: {
+        id,
+        accountId,
+      },
+    });
+
+    this.setCache(session);
+
+    return session;
   }
   async createFromToken(token: string) {
     console.log(
@@ -55,8 +70,22 @@ export default class SessionService {
       });
     return await this.create(account.id);
   }
-  async get(id: string) {
+  async get(id: string): Promise<Session> {
     const redis = await this.Redis.db(0);
-    return JSON.parse(await redis.get(id));
+
+    const redisResult = await redis.get(id);
+    if (redisResult) {
+      return { id, ...JSON.parse(redisResult) };
+    }
+    const dbResult = await this.db.session.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!dbResult) {
+      throw new HttpException(null, HttpStatus.NOT_FOUND);
+    }
+    this.setCache(dbResult);
+    return dbResult;
   }
 }
