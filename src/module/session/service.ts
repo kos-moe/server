@@ -34,13 +34,6 @@ export default class SessionService {
     return session;
   }
   async createFromToken(token: string) {
-    console.log(
-      JSON.stringify({
-        token,
-        clientId: this.config.get('OAUTH_CLIENT_ID'),
-        clientSecret: this.config.get('OAUTH_CLIENT_SECRET'),
-      }),
-    );
     const session = await fetch('https://id.kos.moe/api/oauth/token', {
       method: 'POST',
       body: JSON.stringify({
@@ -83,7 +76,7 @@ export default class SessionService {
       },
     });
     if (!dbResult) {
-      throw new HttpException(null, HttpStatus.NOT_FOUND);
+      return null;
     }
     this.setCache(dbResult);
     return dbResult;
