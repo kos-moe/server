@@ -9,9 +9,12 @@ export default class ProfileController {
 
   @UseGuards(AuthGuard())
   @Post()
-  async create(@Body() { handle }: CreateProfileDto, @Request() { user }) {
+  async create(
+    @Body() { handle }: CreateProfileDto,
+    @Request() { user: session },
+  ) {
     const profile = await this.profile.create(handle, {
-      accountId: user.accountId,
+      accountId: session.accountId,
     });
     return { profile: profile.id };
   }

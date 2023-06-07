@@ -11,9 +11,6 @@ export default class AuthService {
 
   async validateUser(sessionId: string): Promise<any> {
     const session = await this.Session.get(sessionId);
-    if (session) {
-      return { session };
-    }
-    return null;
+    return session || null;
   }
 }
