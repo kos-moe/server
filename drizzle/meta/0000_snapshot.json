@@ -1,0 +1,79 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "id": "b3fd7cd1-c7bd-4ef2-92c7-ac278497c282",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "tables": {
+    "account_emails": {
+      "name": "account_emails",
+      "schema": "",
+      "columns": {
+        "email": {
+          "name": "email",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "account_id": {
+          "name": "account_id",
+          "type": "char(26)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "account_emails_account_id_accounts_id_fk": {
+          "name": "account_emails_account_id_accounts_id_fk",
+          "tableFrom": "account_emails",
+          "tableTo": "accounts",
+          "columnsFrom": [
+            "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {}
+    },
+    "accounts": {
+      "name": "accounts",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "char(26)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "''"
+        },
+        "authenticator": {
+          "name": "authenticator",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'::json"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {}
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  }
+}

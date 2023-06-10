@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
-import DatabaseModule from './module/database';
-import AuthModule from './module/auth';
+//import AuthModule from './auth';
 import { ConfigModule } from '@nestjs/config';
-import ProfileModule from './module/profile';
+import InternalSessionModule from './internal-session/internal-session.module';
+//import ProfileModule from './profile';
 
 @Module({
   imports: [
-    DatabaseModule,
-    AuthModule,
+    //AuthModule,
     ConfigModule.forRoot({ isGlobal: true }),
-    ProfileModule,
+    //ProfileModule,
+    InternalSessionModule,
   ],
 })
 export class CoreModule {}
