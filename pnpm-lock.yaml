@@ -29,9 +29,6 @@ dependencies:
   '@node-rs/argon2':
     specifier: ^1.5.0
     version: 1.5.0
-  '@prisma/client':
-    specifier: ^4.15.0
-    version: 4.15.0(prisma@4.15.0)
   class-transformer:
     specifier: ^0.5.1
     version: 0.5.1
@@ -121,9 +118,6 @@ devDependencies:
   prettier:
     specifier: ^2.8.8
     version: 2.8.8
-  prisma:
-    specifier: ^4.15.0
-    version: 4.15.0
   source-map-support:
     specifier: ^0.5.21
     version: 0.5.21
@@ -2041,28 +2035,6 @@ packages:
       node-fetch: 2.6.9
     transitivePeerDependencies:
       - encoding
-
-  /@prisma/client@4.15.0(prisma@4.15.0):
-    resolution: {integrity: sha512-xnROvyABcGiwqRNdrObHVZkD9EjkJYHOmVdlKy1yGgI+XOzvMzJ4tRg3dz1pUlsyhKxXGCnjIQjWW+2ur+YXuw==}
-    engines: {node: '>=14.17'}
-    requiresBuild: true
-    peerDependencies:
-      prisma: '*'
-    peerDependenciesMeta:
-      prisma:
-        optional: true
-    dependencies:
-      '@prisma/engines-version': 4.15.0-28.8fbc245156db7124f997f4cecdd8d1219e360944
-      prisma: 4.15.0
-    dev: false
-
-  /@prisma/engines-version@4.15.0-28.8fbc245156db7124f997f4cecdd8d1219e360944:
-    resolution: {integrity: sha512-sVOig4tjGxxlYaFcXgE71f/rtFhzyYrfyfNFUsxCIEJyVKU9rdOWIlIwQ2NQ7PntvGnn+x0XuFo4OC1jvPJKzg==}
-    dev: false
-
-  /@prisma/engines@4.15.0:
-    resolution: {integrity: sha512-FTaOCGs0LL0OW68juZlGxFtYviZa4xdQj/rQEdat2txw0s3Vu/saAPKjNVXfIgUsGXmQ72HPgNr6935/P8FNAA==}
-    requiresBuild: true
 
   /@sinclair/typebox@0.24.51:
     resolution: {integrity: sha512-1P1OROm/rdubP5aFDSZQILU0vrLCJ4fvHt6EoqHEM+2D/G5MK3bIaymUKLit8Js9gbns5UyJnkP/TZROLw4tUA==}
@@ -5889,14 +5861,6 @@ packages:
       ansi-styles: 5.2.0
       react-is: 18.2.0
     dev: true
-
-  /prisma@4.15.0:
-    resolution: {integrity: sha512-iKZZpobPl48gTcSZVawLMQ3lEy6BnXwtoMj7hluoGFYu2kQ6F9LBuBrUyF95zRVnNo8/3KzLXJXJ5TEnLSJFiA==}
-    engines: {node: '>=14.17'}
-    hasBin: true
-    requiresBuild: true
-    dependencies:
-      '@prisma/engines': 4.15.0
 
   /process-nextick-args@2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
