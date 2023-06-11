@@ -1,5 +1,5 @@
 import { varchar, pgTable, json } from 'drizzle-orm/pg-core';
-import { id } from '../database/postgres';
+import { id } from '../database/utils';
 
 type AccountAuthenticator = {
   password?: string;
