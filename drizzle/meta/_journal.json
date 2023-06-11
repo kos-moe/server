@@ -8,6 +8,13 @@
       "when": 1686236947781,
       "tag": "0000_outgoing_rockslide",
       "breakpoints": false
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1686495655127,
+      "tag": "0001_fresh_multiple_man",
+      "breakpoints": false
     }
   ]
 }

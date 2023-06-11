@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 //import AuthModule from './auth';
 import { ConfigModule } from '@nestjs/config';
 import InternalSessionModule from './internal-session/internal-session.module';
+import OAuthModule from './oauth/oauth.module';
 //import ProfileModule from './profile';
 
 @Module({
@@ -10,6 +11,7 @@ import InternalSessionModule from './internal-session/internal-session.module';
     ConfigModule.forRoot({ isGlobal: true }),
     //ProfileModule,
     InternalSessionModule,
+    OAuthModule,
   ],
 })
 export class CoreModule {}
