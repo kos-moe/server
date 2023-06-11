@@ -1,0 +1,31 @@
+<form class="box" method="post" @submit="handleSubmit">
+  <h1 class="is-size-3">회원 가입</h1>
+  <div class="field">
+    <label class="label">이메일</label>
+    <div class="control">
+      <input class="input" type="email" name="email" placeholder="kosmo@kos.moe" required>
+    </div>
+  </div>
+  <button type="submit" class="button is-primary">인증 메일 보내기</button>
+</form>
+<script>
+Vue.createApp({
+  methods: {
+    handleSubmit(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      fetch('/register/mail', {
+        method: 'POST',
+        body: new URLSearchParams(formData),
+        credentials: 'include',
+      }).then((res) => {
+        if (res.ok) {
+          location.href = `/register?email=${formData.get('email')}`;
+        } else {
+          alert('인증 메일 보내기 실패');
+        }
+      });
+    },
+  },
+}).mount('#app');
+</script>

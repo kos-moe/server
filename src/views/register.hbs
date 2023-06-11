@@ -1,0 +1,51 @@
+<form class="box" method="post" @submit="handleSubmit">
+  <h1 class="is-size-3">회원 가입</h1>
+  <div class="field">
+    <label class="label">이메일</label>
+    <div class="control">
+      <input class="input" type="email" name="email" autocomplete="email" placeholder="kosmo@kos.moe" value="{{email}}" required>
+    </div>
+  </div>
+  <div class="field">
+    <label class="label">인증 코드</label>
+    <div class="control">
+      <input class="input" type="text" inputmode="numeric" maxlength="8" autocomplete="no" name="verificationCode" placeholder="20000922" value="{{code}}" required>
+    </div>
+  </div>
+  <div class="field">
+    <label class="label">계정 이름</label>
+    <div class="control">
+      <input class="input" type="text" name="name" autocomplete="name" placeholder="레니" required>
+    </div>
+  </div>
+  <div class="field">
+    <label class="label">비밀번호</label>
+    <div class="control">
+      <input class="input" type="password" name="password" autocomplete="new-password" placeholder="********" required>
+    </div>
+  </div>
+  <div>
+    <button type="submit" class="button is-primary">회원 가입</button>
+  </div>
+</form>
+<script>
+Vue.createApp({
+  methods: {
+    handleSubmit(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      fetch('/register', {
+        method: 'POST',
+        body: new URLSearchParams(formData),
+        credentials: 'include',
+      }).then((res) => {
+        if (res.ok) {
+          location.href = `/`;
+        } else {
+          alert('회원가입 실패');
+        }
+      });
+    },
+  },
+}).mount('#app');
+</script>
