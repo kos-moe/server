@@ -59,7 +59,7 @@ export default class OAuthController {
       clientId,
       scope.split(' '),
     );
-    return response.redirect(`${redirectURI}?token=${token}`);
+    return response.redirect(`${redirectURI}?code=${token}`);
   }
 
   @Post('token')
