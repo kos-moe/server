@@ -1,4 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { eq } from 'drizzle-orm';
 import db from '../database/postgres';
 import { follows } from './follow.schema';
 
@@ -20,5 +21,10 @@ export default class FollowService {
         console.error(err);
       });
     return { type: 'follow' };
+  }
+  async getFollowers(accountId: string) {
+    return (
+      await db.select().from(follows).where(eq(follows.followingId, accountId))
+    ).map((follow) => follow.followerId);
   }
 }
