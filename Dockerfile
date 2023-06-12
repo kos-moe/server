@@ -8,7 +8,6 @@ RUN corepack prepare pnpm@latest --activate
 RUN pnpm install
 
 COPY . .
-RUN pnpm run prisma:generate
 RUN pnpm run build
 
 EXPOSE 3000
