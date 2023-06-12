@@ -1,5 +1,5 @@
 import { Body, Controller, Post, UseGuards, Request } from '@nestjs/common';
-import { AuthGuard } from '../auth/guard';
+import { AuthGuard } from '../session/auth.guard';
 import { CreateProfileDto } from './dto';
 import ProfileService from './profile.service';
 
@@ -7,7 +7,7 @@ import ProfileService from './profile.service';
 export default class ProfileController {
   constructor(private profile: ProfileService) {}
 
-  @UseGuards(AuthGuard())
+  @UseGuards(AuthGuard)
   @Post()
   async create(
     @Body() { handle }: CreateProfileDto,

@@ -46,5 +46,4 @@ export default class ProfileService {
       .returning();
     return profile[0];
   }
-
 }

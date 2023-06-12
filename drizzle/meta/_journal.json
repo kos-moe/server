@@ -22,6 +22,13 @@
       "when": 1686505131955,
       "tag": "0002_deep_rumiko_fujikawa",
       "breakpoints": false
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1686538460468,
+      "tag": "0003_good_cassandra_nova",
+      "breakpoints": false
     }
   ]
 }

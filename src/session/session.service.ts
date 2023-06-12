@@ -1,5 +1,4 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { eq, InferModel } from 'drizzle-orm';
 import { ulid } from 'ulid';
 import AccountService from '../account/account.service';
@@ -47,7 +46,7 @@ export default class SessionService {
           accountId,
           appId,
           scope,
-          profileId: useProfile || null,
+          profileId: useProfile ? useProfile : null,
         })
         .returning()
     )[0];
