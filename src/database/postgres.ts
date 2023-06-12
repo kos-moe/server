@@ -4,6 +4,6 @@ import { config } from 'dotenv';
 
 config();
 
-const queryClient = postgres(process.env.DATABASE_URL);
+const queryClient = postgres(process.env.DATABASE_URL, { ssl: 'require' });
 const db: PostgresJsDatabase = drizzle(queryClient);
 export default db;

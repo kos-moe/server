@@ -5,7 +5,7 @@ import { config } from 'dotenv';
 
 config();
 
-const sql = postgres(process.env.DATABASE_URL, { max: 1 });
+const sql = postgres(process.env.DATABASE_URL, { max: 1, ssl: 'require' });
 const migrateDB = drizzle(sql);
 
 migrate(migrateDB, { migrationsFolder: 'drizzle' }).then(() => {
