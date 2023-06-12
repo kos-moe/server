@@ -18,6 +18,14 @@
   </div>
 </form>
 <script>
+function getCookie(name) {
+  const value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+  return value? value[2] : null;
+}
+
+const redirectCookie = getCookie('redirect');
+const redirect = redirectCookie ? decodeURIComponent(redirectCookie) : '/';
+
 Vue.createApp({
   methods: {
     handleSubmit(e) {
@@ -29,7 +37,7 @@ Vue.createApp({
         credentials: 'include',
       }).then((res) => {
         if (res.ok) {
-          location.href = '/';
+          location.href = redirect;
         } else {
           alert('로그인 실패');
         }

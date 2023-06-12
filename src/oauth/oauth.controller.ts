@@ -30,6 +30,7 @@ export default class OAuthController {
   ) {
     const sessionId = request.cookies.session;
     if (!sessionId || !(await this.InternalSession.get(sessionId))) {
+      response.cookie('redirect', request.originalUrl);
       return response.redirect('/login');
     }
     // TODO: 앱 정보 & CSRF 토큰 검증
@@ -45,6 +46,7 @@ export default class OAuthController {
   ) {
     const sessionId = request.cookies.session;
     if (!sessionId || !(await this.InternalSession.get(sessionId))) {
+      response.cookie('redirect', request.originalUrl);
       return response.redirect('/login');
     }
     const app = await this.OAuth.get(clientId);
