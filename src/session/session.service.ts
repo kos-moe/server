@@ -1,11 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { eq, InferModel } from 'drizzle-orm';
 import { ulid } from 'ulid';
 import AccountService from '../account/account.service';
-import { ConfigService } from '@nestjs/config';
-import redis from '../database/redis';
 import db from '../database/postgres';
+import redis from '../database/redis';
+import ProfileService from '../profile/profile.service';
 import { sessions } from './session.schema';
-import { eq, InferModel } from 'drizzle-orm';
 
 type Session = InferModel<typeof sessions>;
 type RedisSession = Omit<Omit<Session, 'id'>, 'expiresAt'> & {
@@ -14,7 +15,10 @@ type RedisSession = Omit<Omit<Session, 'id'>, 'expiresAt'> & {
 
 @Injectable()
 export default class SessionService {
-  constructor(private account: AccountService, private config: ConfigService) {}
+  constructor(
+    private account: AccountService,
+    private profile: ProfileService,
+  ) {}
   private async setCache(session: Session) {
     const { id, ...data } = {
       ...session,
@@ -23,7 +27,17 @@ export default class SessionService {
     await redis.set(`session:${id}`, JSON.stringify(data));
     await redis.expire(`session:${id}`, 3600);
   }
-  async create(accountId: string, appId: string, scope: string[]) {
+  async create(
+    accountId: string,
+    appId: string,
+    scope: string[],
+    profileId?: string,
+  ) {
+    if (!(await this.account.get(accountId))) {
+      throw new HttpException('Account not found', HttpStatus.NOT_FOUND);
+    }
+    const useProfile =
+      profileId || (await this.profile.getManyByAccount(accountId))[0].id;
     const id = ulid();
     const session = (
       await db
@@ -33,6 +47,7 @@ export default class SessionService {
           accountId,
           appId,
           scope,
+          profileId: useProfile || null,
         })
         .returning()
     )[0];

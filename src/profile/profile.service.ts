@@ -18,6 +18,13 @@ export default class ProfileService {
       .where(sql`lower(${profiles.handle}) = lower(${handle})`);
     return result[0];
   }
+  async getManyByAccount(accountId: string) {
+    const result = await db
+      .select()
+      .from(profiles)
+      .where(eq(profiles.accountId, accountId));
+    return result;
+  }
   async create(
     handle: string,
     { accountId, name }: { accountId?: string; name?: string } = {},
@@ -39,4 +46,5 @@ export default class ProfileService {
       .returning();
     return profile[0];
   }
+
 }

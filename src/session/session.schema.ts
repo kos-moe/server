@@ -3,6 +3,7 @@ import { json, pgTable, timestamp } from 'drizzle-orm/pg-core';
 import { CASCADE, id } from '../database/utils';
 import { accounts } from '../account/account.schema';
 import { oAuthApps } from '../oauth/oauth.schema';
+import { profiles } from '../profile/profile.schema';
 
 export const sessions = pgTable('sessions', {
   id: id('id').primaryKey(),
@@ -14,4 +15,8 @@ export const sessions = pgTable('sessions', {
     .default(sql`now() + interval '7 day'`),
   appId: id('app_id').references(() => oAuthApps.id, CASCADE),
   scope: json('scope').notNull().default([]).$type<string[]>(),
+  profileId: id('profile_id').references(() => profiles.id, {
+    onUpdate: 'cascade',
+    onDelete: 'set null',
+  }),
 });
