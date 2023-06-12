@@ -55,7 +55,7 @@ export default class LoginService {
       'no-reply@kos.moe',
       email,
       `kos.moe 회원가입 인증 이메일 [${verificationCode}]`,
-      `인증 코드는 ${verificationCode} 입니다.\r\n인증 코드를 입력하시거나 이 링크를 클릭해주세요: https://kos.moe/register?email=${email}&authCode=${verificationCode}`,
+      `인증 코드는 ${verificationCode} 입니다.\r\n인증 코드를 입력하시거나 이 링크를 클릭해주세요: https://kos.moe/register?email=${email}&code=${verificationCode}`,
     );
     await redis.set(
       `email:verification:${email}`,
