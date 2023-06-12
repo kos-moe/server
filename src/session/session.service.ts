@@ -35,8 +35,8 @@ export default class SessionService {
     if (!(await this.account.get(accountId))) {
       throw new HttpException('Account not found', HttpStatus.NOT_FOUND);
     }
-    const useProfile =
-      profileId || (await this.profile.getManyByAccount(accountId))[0].id;
+    const profiles = await this.profile.getManyByAccount(accountId);
+    const useProfile = profileId || profiles[0]?.id || null;
     const id = ulid();
     const session = (
       await db
