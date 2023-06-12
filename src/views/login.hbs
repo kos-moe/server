@@ -1,0 +1,40 @@
+<form class="box" method="post" @submit="handleSubmit">
+  <h1 class="is-size-3">로그인</h1>
+  <div class="field">
+    <label class="label">이메일</label>
+    <div class="control">
+      <input class="input" type="email" name="email" placeholder="kosmo@kos.moe" required>
+    </div>
+  </div>
+  <div class="field">
+    <label class="label">비밀번호</label>
+    <div class="control">
+      <input class="input" type="password" name="password" placeholder="********" required>
+    </div>
+  </div>
+  <div>
+    <button class="button is-primary">로그인</button>
+    <a href="/register/mail" class="button">회원가입</a>
+  </div>
+</form>
+<script>
+Vue.createApp({
+  methods: {
+    handleSubmit(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      fetch('/login', {
+        method: 'POST',
+        body: new URLSearchParams(formData),
+        credentials: 'include',
+      }).then((res) => {
+        if (res.ok) {
+          location.href = '/';
+        } else {
+          alert('로그인 실패');
+        }
+      });
+    },
+  },
+}).mount('#app');
+</script>
