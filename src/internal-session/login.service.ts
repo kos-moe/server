@@ -49,7 +49,7 @@ export default class LoginService {
       }
       resendCount = existedVerification.resendCount + 1;
     }
-    const verificationCode = randomInt(100000000).toString().padStart(8, '0');
+    const verificationCode = randomInt(1000000).toString().padStart(6, '0');
     const createdAt = Date.now();
     await this.Mailer.send(
       'no-reply@kos.moe',
